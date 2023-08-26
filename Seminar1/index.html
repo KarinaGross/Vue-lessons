@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .show {
+            animation: vision 1s ease-in-out;
+        }
+
+        @keyframes vision {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Задание 1
+    1. Создать параграф, внутри которого будет отображаться текст “Товаров в корзине 0”
+    2. Создать кнопку “Купить”, при клике на которую, значение внутри параграфа будет увеличиваться на 1, при повторном
+    нажатии на эту кнопку, счетчик не становится больше
+    3. При нажатии на кнопку купить, необходимо чтобы текст внутри кнопки поменялся на “Товар в Корзине” 
+    -->
+
+    <!-- Задание 2
+    1. Создать две кнопки “Мне исполнилось 14 лет” и “Мне еще нет 14 лет”
+    2. Если пользователь нажимает на первую кнопку, то должен отобразиться текст. “Можете заказать товар”
+    3. Если пользователь нажимает на вторую кнопку, отображается текст “Доступ закрыт” 
+    -->
+
+    <!-- Задание 3
+    1 Создать кнопку “Показать еще” при клике на которую появляется контент под кнопкой, при повторном клике,
+    контент необходимо скрыть
+    2 Добавить анимацию появления текстового блока 
+    -->
+
+    <!-- 
+    1 Создайте кнопку "Генерировать случайное число". При клике на кнопку должно отображаться случайное число в
+    заданном диапазоне (например, от 1 до 10).
+    2 При клике на кнопку, если полученное значение меньше 5, необходимо вывести на страницу, “Число меньше 5”
+    3 Если число от 5 до 9, необходимо вывести “Число от 5 до 9”
+    4 Если число равно 10, необходимо вывести “Число ранов 10” 
+    -->
+
+    <div id="vue-box">
+        <p>Товаров в корзине {{count}}</p>
+        <button @click="add">{{cartBtn}}</button>
+        <button @click="del">Удалить</button>
+
+        <hr>
+
+        <button @click="canBuy=!canBuy">Мне исполнилось 14 лет</button>
+        <button @click="cantBuy=!cantBuy">Мне еще нет 14 лет</button>
+        <p v-show="canBuy">Можете заказать товар</p>
+        <p v-show="cantBuy">Доступ закрыт</p>
+
+        <hr>
+        <button @click="show=!show">Показать еще</button>
+        <p v-show="show" class="show">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum enim quae itaque
+            quidem, architecto vero quaerat odio reprehenderit sit molestiae natus vitae consectetur aut voluptatum
+            quasi eaque impedit reiciendis tenetur.</p>
+
+        <hr>
+        <button @click="random">Генерировать случайное число</button>
+        <p>{{ randomNum }}</p>
+        <p v-if="randomNum < 5">Число меньше 5</p>
+        <p v-else-if="randomNum >= 5 && randomNum < 10">Число от 5 до 9</p>
+        <p v-else>Число ранов 10</p>
+    </div>
+
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const NewVue = {
+            data() {
+                return {
+                    count: 0,
+                    cartBtn: 'Купить',
+                    canBuy: false,
+                    cantBuy: false,
+                    show: false,
+                    randomNum: 0,
+                }
+            },
+            methods: {
+                add() {
+                    if (this.count < 1) {
+                        this.count++;
+                        this.cartBtn = 'Товар в корзине';
+                    }
+                },
+                del() {
+                    if (this.count != 0) {
+                        this.count--;
+                        this.cartBtn = 'Купить';
+                    }
+                },
+                random() {
+                    this.randomNum = Math.floor(Math.random() * 10 + 1)
+                }
+            }
+        }
+
+        Vue.createApp(NewVue).mount('#vue-box')
+    </script>
+</body>
+
+</html>
