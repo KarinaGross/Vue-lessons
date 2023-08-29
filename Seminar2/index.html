@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue - lesson 2</title>
+    <style>
+        .good {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vue-box">
+        <h1>Задание 1</h1>
+        <div class="good">
+            <h2>{{ item.title }}</h2>
+            <img :src="item.img" :alt="item.title" width="300">
+            <h4>Стоимость: {{ item.price }}</h4>
+            <button @click="generateDiscount" :disabled="isDisabled">Получить скидку</button>
+        </div>
+        <hr>
+
+        <h1>Задание 2</h1>
+        <ul>
+            <li v-for="user in users" :key="user.id">Имя: {{ user.name }}, Возраст: {{ user.age }}</li>
+        </ul>
+        <hr>
+
+        <h1>Задание 3</h1>
+        <ul>
+            <li v-for="good in goods" :key="good.id">
+                <input v-model="good.amount" type="number">
+                <label for="">{{ good.title }}<input type="checkbox"></label>
+            </li>
+        </ul>
+        <hr>
+
+        <h1>Задание 4</h1>
+        <form @submit.prevent="createContact">
+            <label>First name<input type="text" v-model.lazy="firstName"></label>
+            <label>Last name<input type="text" v-model.lazy="lastName"></label>
+            <label>Email<input type="text" v-model.lazy="email"></label>
+            <button>Add user</button>
+        </form>
+        <ul>
+            <li v-for="contact in contacts" :key="contact.id">
+                name - {{ contact.firstName }}
+                lastname - {{ contact.lastName }}
+                email - {{ contact.email }}
+
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const NewVue = {
+            data() {
+                return {
+                    item: {
+                        title: 'Телефон',
+                        price: 10000,
+                        img: './img/item.jpg'
+                    },
+                    isDisabled: false,
+                    users: [
+                        { id: 1, name: 'Иван', age: 25 },
+                        { id: 2, name: 'Мария', age: 30 },
+                        { id: 3, name: 'Алексей', age: 35 },
+                        { id: 4, name: 'Елена', age: 28 }
+                    ],
+                    goods: [
+                        { id: 1, title: 'Хлеб', amount: 1 },
+                        { id: 2, title: 'Молоко', amount: 3 },
+                        { id: 3, title: 'Кефир', amount: 8 },
+                        { id: 4, title: 'Сахар', amount: 2 }
+                    ],
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    contacts: []
+                }
+            },
+            methods: {
+                generateDiscount() {
+                    const discountPercent = Math.floor(Math.random() * 20 + 1);
+                    this.item.price = this.item.price - (this.item.price * discountPercent) / 100;
+                    this.isDisabled = true;
+                },
+                createContact() {
+                    const firstNameTrim = this.firstName.trim();
+                    const lastNameTrim = this.lastName.trim();
+                    const emailTrim = this.email.trim();
+
+                    if (firstNameTrim && lastNameTrim && emailTrim) {
+                        const newContact = {
+                            id: Date.now(),
+                            firstName: firstNameTrim,
+                            lastName: lastNameTrim,
+                            email: emailTrim,
+                        };
+
+                        this.contacts.push(newContact);
+                        this.firstName = '';
+                        this.lastName = '';
+                        this.email = '';
+                    }
+                }
+            }
+        }
+
+        Vue.createApp(NewVue).mount('#vue-box')
+    </script>
+</body>
+
+</html>
