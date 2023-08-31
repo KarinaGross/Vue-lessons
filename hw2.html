@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Вы разрабатываете приложение для отображения и сортировки списка товаров. 
+        У вас есть массив объектов products, где каждый объект представляет товар с его названием и ценой. 
+        Вам необходимо отобразить список товаров и предоставить пользователю возможность сортировать 
+        товары по цене (по возрастанию и по убыванию). -->
+
+    <div id="vue-box">
+        <ul>
+            <li v-for="product in products" :key="product.id">
+                <p>{{ product.title }} - {{ product.amount }} шт</p>
+            </li>
+        </ul>
+
+        <button @click="productSortMinToMax">Сортировать по возрастанию</button>
+        <button @click="productSortMaxToMin">Сортировать по убыванию</button>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const NewVue = {
+            data() {
+                return {
+                    products: [
+                        { id: 1, title: 'Хлеб', amount: 1 },
+                        { id: 2, title: 'Молоко', amount: 3 },
+                        { id: 3, title: 'Кефир', amount: 8 },
+                        { id: 4, title: 'Сахар', amount: 2 }
+                    ]
+                }
+            },
+            methods: {
+                productSortMinToMax() {
+                    this.products.sort((a, b) => a.amount > b.amount ? 1 : -1);
+                },
+                productSortMaxToMin() {
+                    this.products.sort((a, b) => a.amount < b.amount ? 1 : -1);
+                }
+            }
+        }
+
+        Vue.createApp(NewVue).mount('#vue-box')
+    </script>
+</body>
+
+</html>
