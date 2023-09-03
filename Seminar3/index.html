@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="vue-box">
+        <some-counter></some-counter>
+        <some-counter></some-counter>
+
+        <hr>
+
+        <planner></planner>
+
+        <hr>
+
+        <some-list></some-list>
+    </div>
+
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script>
+        Vue.component('some-counter', {
+            template: `
+                <div>
+                    <button @click="decrease">-</button>
+                    <span>{{ counter }}</span>
+                    <button @click="increase">+</button>
+                </div>
+                `,
+            data() {
+                return {
+                    counter: 0,
+                };
+            },
+            methods: {
+                increase() {
+                    this.counter++;
+                },
+                decrease() {
+                    this.counter--;
+                }
+            },
+        });
+
+        Vue.component('planner', {
+            template: `
+                <div>
+                    <input v-model="taskName" type="text" placeholder="Добавить элемент"><button @click="addTask">Добавить</button>
+                    <ul>
+                        <li v-for="task in tasks" :key="task.id">
+                            {{ task }} 
+                            <button @click="deleteTask(task)">Удалить</button>
+                        </li>
+                    </ul>
+                </div>
+            `,
+            data() {
+                return {
+                    taskName: '',
+                    tasks: [],
+                };
+            },
+            methods: {
+                addTask() {
+                    this.tasks.push(this.taskName);
+                    this.taskName = '';
+                },
+                deleteTask(taskName) {
+                    this.tasks.splice(this.tasks.indexOf(taskName), 1);
+                }
+            },
+        });
+
+        Vue.component('some-list', {
+            template: `
+                <div>
+                    <input v-model="filterText" type="text" placeholder="Фильтр">
+                    <ul>
+                        <li v-for="item in filterList" :key="item.id">
+                            {{ item }} 
+                        </li>
+                    </ul>
+                </div>
+                `,
+            data() {
+                return {
+                    filterText: '',
+                    items: ['list1', 'list2', 'list3', 'list11', 'list12', 'list13'],
+                };
+            },
+            computed: {
+                filterList() {
+                    return this.items.filter(item => item.includes(this.filterText));
+                }
+            }
+        })
+
+        new Vue({ el: '#vue-box' })
+    </script>
+</body>
+
+</html>
