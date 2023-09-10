@@ -12,13 +12,13 @@
 
 <script>
 export default {
-    name: 'Authentication',
+    name: 'authentication-block',
 
     data() {
         return {
             isAuthenticated: false,
             word: '',
-            password: ''
+            passwordWord: ''
         };
     },
 

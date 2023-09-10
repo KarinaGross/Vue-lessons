@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    name: 'Cart',
+    name: 'cart-box',
 
     data() {
         return {

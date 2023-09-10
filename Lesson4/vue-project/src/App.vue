@@ -10,7 +10,7 @@ import MortgageCalculator from './components/MortgageCalculator.vue';
 export default {
   name: 'App',
   components: {
-    MortgageCalculator
+    MortgageCalculator,
   }
 }
 </script>
